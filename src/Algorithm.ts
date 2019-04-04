@@ -1,10 +1,10 @@
 import { UnsupportedAlgorithmException } from "./UnsupportedAlgorithmException";
 
-interface StringAlgorithmMap {
+export interface StringAlgorithmMap {
     [key: string]: Algorithm;
 }
 
-class Algorithm {
+export class Algorithm {
     HMAC_SHA1 = new Algorithm("HmacSHA1", "hmac-sha1", "Mac.class");
     HMAC_SHA224 = new Algorithm("HmacSHA224", "hmac-sha224", "Mac.class");
     HMAC_SHA256 = new Algorithm("HmacSHA256", "hmac-sha256", "Mac.class");
@@ -34,8 +34,8 @@ class Algorithm {
 
     public type: any;
 
-    public values: Algorithm[] = [];
-    public aliases: StringAlgorithmMap = {};
+    public static values: Algorithm[] = [];
+    public static aliases: StringAlgorithmMap = {};
 
     public getPortableName(): string {
         return this.portableName;
@@ -49,8 +49,8 @@ class Algorithm {
         return this.type;
     }
 
-    public getValues(): Algorithm[] {
-        return Algorithm.prototype.values;
+    public static getValues(): Algorithm[] {
+        return Algorithm.values || [];
     }
 
     public static toPortableName(name: string): string {
@@ -62,7 +62,7 @@ class Algorithm {
     }
 
     public static get(name: string): Algorithm {
-        let algorithm: Algorithm = /* get */((m, k) => m[k] === undefined ? null : m[k])(Algorithm.prototype.getValues(), Algorithm.normalize(name));
+        let algorithm: Algorithm = Algorithm.getValues()[Algorithm.normalize(name)];
         if (algorithm != null) return algorithm;
         throw new UnsupportedAlgorithmException(name);
     }
@@ -84,10 +84,8 @@ class Algorithm {
         this.portableName = portableName;
         this.jmvName = jmvName;
         this.type = type;
-        Algorithm.prototype.values.push(this);
-        Algorithm.prototype.aliases[Algorithm.normalize(portableName)] = this;
-        Algorithm.prototype.aliases[Algorithm.normalize(jmvName)] = this;
+        Algorithm.values.push(this);
+        Algorithm.aliases[Algorithm.normalize(portableName)] = this;
+        Algorithm.aliases[Algorithm.normalize(jmvName)] = this;
     }
 }
-
-export { Algorithm, StringAlgorithmMap }
