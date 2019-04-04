@@ -1,11 +1,11 @@
 import { Join } from "./Join";
 import { MissingRequiredHeaderException } from "./MissingRequiredHeaderException";
 
-interface StringMap {
+export interface StringMap {
     [key: string]: string;
 }
 
-class Signatures {
+export class Signatures {
     public static createSigningString(required: Array<string>, method: string, uri: string, headers: StringMap): string {
         headers = Signatures.lowercase(headers) as StringMap;
         let list: string[] = [];

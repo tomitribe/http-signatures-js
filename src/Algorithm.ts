@@ -1,5 +1,9 @@
 import { UnsupportedAlgorithmException } from "./UnsupportedAlgorithmException";
 
+interface StringAlgorithmMap {
+    [key: string]: Algorithm;
+}
+
 class Algorithm {
     HMAC_SHA1 = new Algorithm("HmacSHA1", "hmac-sha1", "Mac.class");
     HMAC_SHA224 = new Algorithm("HmacSHA224", "hmac-sha224", "Mac.class");
@@ -31,6 +35,7 @@ class Algorithm {
     public type: any;
 
     public values: Algorithm[] = [];
+    public aliases: StringAlgorithmMap = {};
 
     public getPortableName(): string {
         return this.portableName;
@@ -80,7 +85,9 @@ class Algorithm {
         this.jmvName = jmvName;
         this.type = type;
         Algorithm.prototype.values.push(this);
+        Algorithm.prototype.aliases[Algorithm.normalize(portableName)] = this;
+        Algorithm.prototype.aliases[Algorithm.normalize(jmvName)] = this;
     }
 }
 
-export { Algorithm }
+export { Algorithm, StringAlgorithmMap }
