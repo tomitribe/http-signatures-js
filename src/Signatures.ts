@@ -6,8 +6,8 @@ interface StringMap {
 }
 
 class Signatures {
-    public static createSigningString(required: Array<string>, method: string, uri: string, headers: any): string {
-        headers = Signatures.lowercase(headers);
+    public static createSigningString(required: Array<string>, method: string, uri: string, headers: StringMap): string {
+        headers = Signatures.lowercase(headers) as StringMap;
         let list: string[] = [];
         for (let key of required) {
             if ("(request-target)" === key) {
@@ -32,9 +32,9 @@ class Signatures {
 
     private static lowercase(headers: (string | StringMap)): (string | StringMap) {
         if (typeof headers === 'string') {
-            return headers.toLowerCase();
+            return headers.toLowerCase() as string;
         } else {
-            return Signatures.lowercase$(headers);
+            return Signatures.lowercase$(headers) as StringMap;
         }
     }
 }

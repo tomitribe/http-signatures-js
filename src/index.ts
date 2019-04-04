@@ -1,3 +1,4 @@
+export * from "./Algorithm";
 export * from "./AuthenticationException";
 export * from "./Base64";
 export * from "./Collection";
@@ -11,7 +12,7 @@ export * from "./MissingSignatureException";
 //export * from "./RSA";
 export * from "./RuntimeException";
 export * from "./System";
-//export * from "./Signature";
+export * from "./Signature";
 export * from "./Signatures";
 //export * from "./Signer";
 export * from "./UnparsableSignatureException";
