@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import jwkJs from "jwk-js";
+import * as jwkJs from "jwk-js";
 
 export class EC {
     private static EC: string = "EC";
@@ -23,9 +23,9 @@ export class EC {
     /**
      * Returns a private key constructed from the given DER bytes in PKCS#8 format.
      */
-    public static privateKeyFromPKCS8(pkcs8: number[]){
+    public static privateKeyFromPKCS8(pkcs8: ArrayBuffer | Uint8Array){
         try {
-            return jwkJs.EC.JWKfromEC(pkcs8, "private");
+            return jwkJs.EC.JWKfromEC(jwkJs.AB2s(pkcs8), "private");
         } catch (e) {
             throw new Error(e);
         }
@@ -34,9 +34,9 @@ export class EC {
     /**
      * Returns a public key constructed from the given DER bytes.
      */
-    public static publicKeyFrom(derBytes: number[]){
+    public static publicKeyFrom(derBytes: ArrayBuffer | Uint8Array){
         try {
-            return jwkJs.EC.JWKfromEC(derBytes, "public");
+            return jwkJs.EC.JWKfromEC(jwkJs.AB2s(derBytes), "public");
         } catch (e) {
             throw new Error(e);
         }

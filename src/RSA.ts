@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import jwkJs from "jwk-js";
+import * as jwkJs from "jwk-js";
 
 export class RSA {
     private static RSA: string = "RSA";
@@ -23,9 +23,9 @@ export class RSA {
     /**
      * Returns a private key constructed from the given DER bytes in PKCS#8 format.
      */
-    public static privateKeyFromPKCS8(pkcs8: number[]){
+    public static privateKeyFromPKCS8(pkcs8: ArrayBuffer | Uint8Array){
         try {
-            return jwkJs.RSA.JWKfromRSA(pkcs8, "private");
+            return jwkJs.RSA.JWKfromRSA(jwkJs.AB2s(pkcs8), "private");
         } catch (e) {
             throw new Error(e);
         }
@@ -34,9 +34,9 @@ export class RSA {
     /**
      * Returns a private key constructed from the given DER bytes in PKCS#1 format.
      */
-    public static privateKeyFromPKCS1(pkcs1: number[]){
+    public static privateKeyFromPKCS1(pkcs1: ArrayBuffer | Uint8Array){
         try {
-            return jwkJs.RSA.JWKfromRSA(pkcs1, "private");
+            return jwkJs.RSA.JWKfromRSA(jwkJs.AB2s(pkcs1), "private");
         } catch (e) {
             throw new Error(e);
         }
@@ -45,9 +45,9 @@ export class RSA {
     /**
      * Returns a public key constructed from the given DER bytes.
      */
-    public static publicKeyFrom(derBytes: number[]){
+    public static publicKeyFrom(derBytes: ArrayBuffer | Uint8Array){
         try {
-            return jwkJs.RSA.JWKfromRSA(derBytes, "public");
+            return jwkJs.RSA.JWKfromRSA(jwkJs.AB2s(derBytes), "public");
         } catch (e) {
             throw new Error(e);
         }
