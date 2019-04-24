@@ -14,8 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { s2AB } from "jwk-js";
-import { StringBuilder } from "ts-tomitribe-util/index";
+import * as jwkJs from "jwk-js";
+import { StringBuilder } from "ts-tomitribe-util";
 import { EC } from "./EC";
 import { RSA } from "./RSA";
 
@@ -92,7 +92,7 @@ export class PEM {
                 {
                     if (readingContent) {
                         if (line.includes(endMarker)) {
-                            pemContents.push(new PEMObject(beginMarker, s2AB(sb.toString())));
+                            pemContents.push(new PEMObject(beginMarker, jwkJs.s2AB(sb.toString())));
                             readingContent = false;
                         } else {
                             sb.append(<any>line.trim());
@@ -119,19 +119,19 @@ export class PEM {
 export class PEMObject {
     private beginMarker: string;
 
-    private derBytes: number[];
+    private derBytes: ArrayBuffer | Uint8Array;
 
-    public constructor(beginMarker: string, derBytes: number[]) {
+    public constructor(beginMarker: string, derBytes: ArrayBuffer | Uint8Array) {
         this.beginMarker = beginMarker;
-        this.derBytes = derBytes.slice(0);
+        this.derBytes = derBytes;
     }
 
     public getBeginMarker(): string {
         return this.beginMarker;
     }
 
-    public getDerBytes(): number[] {
-        return this.derBytes.slice(0);
+    public getDerBytes(): ArrayBuffer | Uint8Array {
+        return this.derBytes[0];
     }
 
     public getPEMObjectType(): PEMObjectType {

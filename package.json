@@ -26,7 +26,7 @@
     "build": "rollup -c",
     "postbuild": "npm run docs",
     "predocs": "rimraf docs",
-    "docs": "typedoc --out docs --target es6 --theme markdown --mode file src/http-signatures-js.ts",
+    "docs": "typedoc --out docs --target es6 --theme markdown --mode file src/index.ts",
     "dev": "rollup -c -w",
     "precommit": "lint-staged",
     "pretest": "npm run build && rimraf coverage",
@@ -75,8 +75,8 @@
     }
   },
   "dependencies": {
-    "pako": "1.0.6",
-    "ts-tomitribe-util": "0.0.1"
+    "ts-tomitribe-util": "0.0.1",
+    "jwk-js": "git+https://github.com/tomitribe/jwk-js.git#216a78048c56738ca12663ba64cba105024df05a"
   },
   "devDependencies": {
     "@types/jest": "^23.0.2",
