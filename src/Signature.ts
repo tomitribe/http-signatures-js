@@ -62,11 +62,15 @@ export class Signature {
             throw new Error("algorithm is required.");
         }
         this.keyId = keyId;
-        this.algorithm = algorithm;
+        this.algorithm = typeof algorithm === 'string' ? Signature.getAlgorithm(algorithm) : algorithm;
         this.signature = signature;
 
         if (headers.length !== 0) {
-            this.headers = this.lowercase(headers);
+            if(headers[0] instanceof Array) {
+                this.headers =this.lowercase(headers[0])
+            } else {
+                this.headers = this.lowercase(headers);
+            }
         }
 
         this.headers = this.headers.slice(0); // unmodifiableList
@@ -78,7 +82,7 @@ export class Signature {
     }
 
     private lowercase(headers: Array<string>): Array<string> {
-        let list: Array<string> = <any>([]);
+        const list: Array<string> = <any>([]);
         for (let header in headers) {
             list.push(header.toLowerCase());
         }

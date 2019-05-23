@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import * as jwkJs from "jwk-js";
+import jwkJs from "jwk-js";
 
 export class RSA {
     private static RSA: string = "RSA";

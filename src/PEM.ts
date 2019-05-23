@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import * as jwkJs from "jwk-js";
+import jwkJs from "jwk-js";
 import { StringBuilder } from "ts-tomitribe-util";
 import { EC } from "./EC";
 import { RSA } from "./RSA";
@@ -140,13 +140,14 @@ export class PEMObject {
 }
 
 export class PEMObjectType {
+    public static values: PEMObjectType[] = [];
+
     public static PRIVATE_KEY_PKCS = new PEMObjectType("-----BEGIN RSA PRIVATE KEY-----");
     public static PRIVATE_EC_KEY_PKCS8 = new PEMObjectType("-----BEGIN EC PRIVATE KEY-----"); // RFC-5915
     public static PRIVATE_KEY_PKCS8 = new PEMObjectType("-----BEGIN PRIVATE KEY-----");
     public static PUBLIC_KEY_X509 = new PEMObjectType("-----BEGIN PUBLIC KEY-----");
     public static CERTIFICATE_X509 = new PEMObjectType("-----BEGIN CERTIFICATE-----");
 
-    public static values: PEMObjectType[] = [];
     protected beginMarker: string;
 
     public getBeginMarker(): string {
