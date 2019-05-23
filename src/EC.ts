@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import * as jwkJs from "jwk-js";
+import jwkJs from "jwk-js";
 
 export class EC {
     private static EC: string = "EC";
